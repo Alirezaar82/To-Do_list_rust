@@ -5,15 +5,15 @@ use std::io::Write;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
+
 fn show_todo_list() -> String {
-    let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
     let text = fs::read_to_string(path).expect("None");
     println!("With text:\n{text}");
     text
 }
 
 fn count_lines_in_file() -> io::Result<usize> {
-    let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let line_count = reader.lines().count();
@@ -21,7 +21,6 @@ fn count_lines_in_file() -> io::Result<usize> {
 }
 
 fn add_new_task(new_todo:String) -> bool {
-    let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
     let count_line = match count_lines_in_file() {
         Ok(count) => count,
         Err(e) => {
@@ -46,7 +45,6 @@ fn add_new_task(new_todo:String) -> bool {
 }
 
 fn edit_todo_list(line_number: usize, new_text: &str) -> bool {
-    let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
     let contents = fs::read_to_string(path);
     let mut lines: Vec<String> = contents.expect("failed").lines().map(|s| s.to_string()).collect();
 
@@ -70,7 +68,6 @@ fn edit_todo_list(line_number: usize, new_text: &str) -> bool {
 }
 
 fn delete_todo_list() {
-    let path = "D:\\w\\To-Do_list_rust\\To-Do_files\\todo.txt";
     fs::remove_file(path).expect("could not remove file");
     File::create(path).expect("could not recreate file");
     println!("Removed file data.txt")
